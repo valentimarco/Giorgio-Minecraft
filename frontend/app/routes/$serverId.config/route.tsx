@@ -12,7 +12,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export default function Servers() {
     const data = useLoaderData<typeof loader>();
     return (
-        <div>
+        <div className="flex justify-center">
             <p>{data.serverId}</p>
         </div>
     );
