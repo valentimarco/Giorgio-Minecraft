@@ -37,12 +37,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="flex">
-        <div className={`flex flex-col bg-slate-500 h-screen ${showNav ? 'w-[256px]' : 'w-0'}`}>
-          <div className={`flex justify-between`}>
-            <h1 className={`text-center flex-grow ${showNav ? '' : 'hidden'}`}>List Servers</h1>
+        <div className={`flex flex-col bg-gradient-to-b from-slate-800 to-slate-900 h-screen transition-all duration-300 ease-in-out ${showNav ? 'w-64' : 'w-0'}`}>
+          <div className={`flex justify-between items-center p-4 border-b border-slate-700`}>
+            <h1 className={`text-slate-100 font-semibold text-lg ${showNav ? '' : 'hidden'}`}>List Servers</h1>
             <button className="rounded-lg" onClick={() => setShowNav(!showNav)}><Icon icon="octicon:three-bars-24" width="24" height="24" /></button>
           </div>
-          <nav className="flex-grow overflow-y-auto">
+          <nav className="flex-grow overflow-y-auto px-3 py-4">
             {
               Array.from({ length: 2 }, (_, index) => (
                 <ServerMenu key={index} serverName={"Hello"} serverId={"ops"} />
@@ -50,8 +50,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
             }
           </nav>
-          <div className={`flex justify-center py-6 ${showNav ? '' : 'hidden'}`}>
-            <h1 className="text-sm">User 1</h1>
+
+          <div className={`border-t border-slate-700 p-4 ${showNav ? '' : 'hidden'}`}>
+            <div className="flex items-center gap-3 text-slate-300">
+              <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center">
+                <h1 className="text-sm">Icon</h1>
+              </div>
+              <span className="text-sm font-medium">User 1</span>
+            </div>
           </div>
         </div>
 
