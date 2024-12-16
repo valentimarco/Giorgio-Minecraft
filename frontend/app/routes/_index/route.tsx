@@ -12,16 +12,11 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="grid grid-cols-2 gap-20 h-screen w-screen overflow-auto">
+    <div className="grid grid-cols-2 ml-5 h-screen w-screen overflow-auto">
       <ChartSkeleton />
       <ChartSkeleton />
       <ChartSkeleton />
-      <ChartSkeleton />
-      <ChartSkeleton />
-      <ChartSkeleton />
-      <ChartSkeleton />
-      <ChartSkeleton />
-      <ChartSkeleton />
+
     </div>
   );
 }

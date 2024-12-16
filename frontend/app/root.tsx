@@ -4,6 +4,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 import { Icon } from '@iconify/react';
@@ -11,22 +12,40 @@ import { Icon } from '@iconify/react';
 import "./tailwind.css";
 import { useState } from "react";
 import { ServerMenu } from "./components/layout/serverMenu";
+import { ServerInfo } from "./types";
 
 export const links: LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
+  // { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  // {
+  //   rel: "preconnect",
+  //   href: "https://fonts.gstatic.com",
+  //   crossOrigin: "anonymous",
+  // },
+  // {
+  //   rel: "stylesheet",
+  //   href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+  // },
 ];
+
+
+export async function loader(): Promise<ServerInfo[]> {
+  //GET /api/v1/servers?query=name,id
+
+  return [
+    {
+      name: "hello",
+      id: "ops"
+    },
+    {
+      name: "world",
+      id: "spo"
+    }
+  ]
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [showNav, setShowNav] = useState<boolean>(true)
+  const serverInfo = useLoaderData<typeof loader>();
 
   return (
     <html lang="en">
@@ -36,7 +55,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="flex">
+      <body className="flex overflow-hidden">
         <div className={`flex flex-col bg-gradient-to-b from-slate-800 to-slate-900 h-screen transition-all duration-300 ease-in-out ${showNav ? 'w-64' : 'w-0'}`}>
           <div className={`flex justify-between items-center p-4 border-b border-slate-700`}>
             <h1 className={`text-slate-100 font-semibold text-lg ${showNav ? '' : 'hidden'}`}>List Servers</h1>
@@ -44,10 +63,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
           <nav className="flex-grow overflow-y-auto px-3 py-4">
             {
-              Array.from({ length: 2 }, (_, index) => (
-                <ServerMenu key={index} serverName={"Hello"} serverId={"ops"} />
+              serverInfo.map((server, index) => (
+                <ServerMenu key={index} serverName={server.name} serverId={server.id} />
               ))
-
             }
           </nav>
 
@@ -60,7 +78,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </div>
-
         {children}
         <ScrollRestoration />
         <Scripts />
