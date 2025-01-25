@@ -11,8 +11,10 @@ import { Icon } from '@iconify/react';
 
 import "./tailwind.css";
 import { useState } from "react";
-import { ServerMenu } from "./components/layout/serverMenu";
+
 import { ServerInfo } from "./types";
+import {CreateServerModal, ServerMenu} from "./components"
+
 
 export const links: LinksFunction = () => [
   // { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -60,6 +62,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
             <div className={`flex justify-center p-4 border-b border-slate-700`}>
               <h1 className={`text-slate-100 font-semibold text-lg`}>List Servers</h1>
+              <CreateServerModal />
             </div>
 
             <nav className="grow overflow-y-auto px-3 py-4">
