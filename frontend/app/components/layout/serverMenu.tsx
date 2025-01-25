@@ -9,7 +9,7 @@ export function ServerMenu({ serverName, serverId }: ServerMenuProps) {
     return (
         <div className="w-full my-2">
             <details className="w-full">
-                <summary className="btn w-full list-none cursor-pointer">
+                <summary className="btn btn-primary w-full list-none cursor-pointer">
                     {serverName}
                 </summary>
                 <ul className="menu w-full bg-base-200 rounded-lg">

@@ -22,4 +22,7 @@ export default {
   plugins: [
     daisyui
   ],
+  daisyui: {
+    themes: ["dark"]
+  }
 } satisfies Config;

@@ -58,7 +58,7 @@ export default function Servers() {
         setCommand('');
     };
     return (
-        <div className="flex-1 flex flex-col h-screen bg-slate-900 text-slate-100">
+        <div className="flex-1 flex flex-col bg-slate-900 text-slate-100">
             {/* Server Info Header */}
             <div className="border-b border-slate-700 p-4">
                 <div className="flex items-center justify-between">
@@ -73,17 +73,17 @@ export default function Servers() {
             {/* Logs Display */}
             <div
                 ref={logsRef}
-                className="flex-1 overflow-y-auto p-4 font-mono text-sm bg-slate-950"
+                className="flex-auto grow overflow-y-auto p-4 font-mono text-sm bg-slate-950"
             >
                 {logs.map((log, index) => (
                     <div key={index} className="mb-1">
                         <span className="text-slate-500">[{log.timestamp}] </span>
                         <span className={`
-                ${log.type === 'error' && 'text-red-400'}
-                ${log.type === 'info' && 'text-blue-400'}
-                ${log.type === 'command' && 'text-yellow-400'}
-                ${log.type === 'response' && 'text-green-400'}
-              `}>
+                            ${log.type === 'error' && 'text-red-400'}
+                            ${log.type === 'info' && 'text-blue-400'}
+                            ${log.type === 'command' && 'text-yellow-400'}
+                            ${log.type === 'response' && 'text-green-400'}
+                        `}>
                             {log.message}
                         </span>
                     </div>
