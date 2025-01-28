@@ -7,13 +7,10 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
-import { Icon } from '@iconify/react';
-
 import "./tailwind.css";
-import { useState } from "react";
 
 import { ServerInfo } from "./types";
-import {CreateServerModal, ServerMenu} from "./components"
+import { CreateServerModal, ServerMenu, ServerHeader } from "./components"
 
 
 export const links: LinksFunction = () => [
@@ -86,9 +83,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="grid grid-rows-[4rem_1fr] m-2 border">
-            <div className="">
-              <button className="btn rounded-lg"><Icon icon="octicon:three-bars-24" width="12" height="12" /></button>
-            </div>
+            <ServerHeader />
 
             {children}
           </div>

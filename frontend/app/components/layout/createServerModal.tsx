@@ -5,25 +5,13 @@ import { DragEvent, useState } from 'react';
 
 export function CreateServerModal() {
     const [listSwitch, setListSwitch] = useState<string>("custom")
-    const [dragActive, setDragActive] = useState(false);
 
-    const handleDragOver = (e: DragEvent) => {
-        e.preventDefault();
-        setDragActive(true);
-    };
-
-    const handleDragLeave = () => {
-        setDragActive(false);
-    };
 
     const handleDrop = (e: DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        setDragActive(false);
         // Handle file drop here
         const file = e.dataTransfer?.files[0];
-        if (file?.type === 'application/pdf') {
-            console.log('PDF dropped:', file);
-        }
+        console.log(file)
     };
 
     const renderContent = () => {
@@ -42,10 +30,9 @@ export function CreateServerModal() {
                             </li>
                         </ol>
                         <div
-                            onDragOver={handleDragOver}
-                            onDragLeave={handleDragLeave}
                             onDrop={handleDrop}
-                            className="my-12 border-2 border-dashed rounded-lg p-12 text-center transition-colors border-base-300 hover:border-primary hover:bg-primary/10"
+                            className="my-12 border-2 border-dashed rounded-lg p-12 text-center transition-colors 
+                            cursor-pointer border-base-300 hover:border-primary hover:bg-primary/10"
                         >
                             <p className="text-lg">Drag and drop your Zip here</p>
                             <p className="text-sm text-base-content/60 mt-2">
