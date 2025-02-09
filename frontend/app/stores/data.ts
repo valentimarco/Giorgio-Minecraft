@@ -2,11 +2,13 @@ export const useDataStore = defineStore('data', () => {
   const servers = reactive([
     {
       name: "hello",
-      id: "ops"
+      id: "ops",
+      online: true
     },
     {
       name: "world",
-      id: "spo"
+      id: "spo",
+      online: false
     }
   ])
 
