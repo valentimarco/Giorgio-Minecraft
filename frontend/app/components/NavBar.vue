@@ -15,7 +15,7 @@ const itemsSelectMenu = computed(() => [
 
 // TODO: Make so that only change the id part!
 const onSelectValue = async (id: string) =>{
-    await navigateTo(`/${id}`)
+    await navigateTo({ params: { id: id } })
 }
 
 const itemsNavMenu = ref([
