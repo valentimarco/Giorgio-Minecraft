@@ -1,21 +1,26 @@
 <script lang="ts" setup>
+import { ServerWizard } from '#components'
 const { servers, curServer } = storeToRefs(useDataStore())
 const route = useRoute();
 const pathId = `/${route.params.id}/`
+const modal = useModal()
 
 const itemsSelectMenu = computed(() => [
     servers.value.map(
         (s) => ({
-             label: s.name, 
-             value: s.id, 
+             label: s.name,
+             value: s.id,
              chip: { color: s.online ? 'success' : 'error' }
         })
     )
 ])
 
-// TODO: Make so that only change the id part!
 const onSelectValue = async (id: string) =>{
     await navigateTo({ params: { id: id } })
+}
+
+const openWizard = () =>{
+    modal.open(ServerWizard)
 }
 
 const itemsNavMenu = ref([
@@ -40,7 +45,7 @@ const itemsNavMenu = ref([
 <template>
     <div class="flex flex-col bg-base-100 rounded-lg m-2 p-2 gap-2 border-2 text-2xl">
 
-        <UButton color="primary" label="Create Server" icon="i-lucide-plus" :ui="{ label: 'text-center w-full' }" />
+        <UButton color="primary" label="Create Server" @click="openWizard" icon="i-lucide-plus" :ui="{ label: 'text-center w-full' }" />
         <USeparator size="xl" />
         <USelectMenu v-model="curServer" value-key="value" :items="itemsSelectMenu" @update:model-value="onSelectValue" class="w-full" size="xl" />
         <USeparator />
