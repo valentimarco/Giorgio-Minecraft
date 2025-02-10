@@ -1,5 +1,5 @@
 declare module '@nuxt/ui' {
-    interface SelectMenuItem<T = any> {
+    interface SelectMenuItem<T = unknown> {
       value?: T
     }
   }

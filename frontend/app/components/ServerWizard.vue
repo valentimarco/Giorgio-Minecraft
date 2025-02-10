@@ -27,9 +27,9 @@ const selectedProvider = ref<string>("CF")
                     <template #provider>
                         <div class="grid grid-cols-[10rem_1fr] border-1 rounded-lg">
                             <div class="flex flex-col p-2 gap-1">
-                                <UButton label="CurseForge" icon="i-lucide-anvil" @click="(e) => {selectedProvider = 'CF'}" :ui="{ label: 'text-center w-full' }"/>
-                                <UButton label="Modrinth" icon="i-lucide-anvil" @click="(e) => {selectedProvider = 'MR'}" :ui="{ label: 'text-center w-full' }"/>
-                                <UButton label="Custom" icon="i-lucide-anvil" @click="(e) => {selectedProvider = 'CU'}" :ui="{ label: 'text-center w-full' }"/>                           
+                                <UButton label="CurseForge" icon="i-lucide-anvil" :ui="{ label: 'text-center w-full' }" @click="(e) => {selectedProvider = 'CF'}"/>
+                                <UButton label="Modrinth" icon="i-lucide-anvil" :ui="{ label: 'text-center w-full' }" @click="(e) => {selectedProvider = 'MR'}"/>
+                                <UButton label="Custom" icon="i-lucide-anvil" :ui="{ label: 'text-center w-full' }" @click="(e) => {selectedProvider = 'CU'}"/>                           
                             </div>
                             <div class="flex">
                                 <!-- TODO: how to create this list based on the modpack list of each site? -->
