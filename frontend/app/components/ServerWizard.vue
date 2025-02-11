@@ -15,49 +15,129 @@ const items = [
     }
 ]
 
+
+const wizardModel = reactive<Partial<ServerWizard>>({
+    type: 'VANILLA',
+    version: '1.20.1',
+    maxPlayers: 20,
+    whitelist: undefined,
+    memory: 6
+})
+
+
 const stepper = useTemplateRef('stepper')
 const selectedProvider = ref<string>("CF")
+const dropZoneRef = ref<HTMLDivElement>()
+
+const onDrop = (files: File[] | null) => {
+    // called when files are dropped on zone
+    console.log(files)
+}
+
+const { isOverDropZone } = useDropZone(dropZoneRef, {
+    onDrop,
+    // specify the types of data to be received.
+    dataTypes: ['image/png'],
+    // control multi-file drop
+    multiple: true,
+    // whether to prevent default behavior for unhandled events
+    preventDefaultForUnhandled: false,
+})
+
+
+const createServer = () => {
+    console.log(wizardModel)
+}
 </script>
 
 <template>
-    <UModal title="Create Server" description="Wizard to create dedicated servers" :close="{ color: 'primary', variant: 'outline', class: 'rounded-full' }">
+    <UModal title="Modal with close button" :close="{ color: 'primary', variant: 'outline', class: 'rounded-full' }">
+        <UButton color="primary" label="Create Server" icon="i-lucide-plus" :ui="{ label: 'text-center w-full' }" />
         <template #body>
-            <div class="w-full">
-                <UStepper ref="stepper" :items="items">
+            <div class="flex flex-col h-full w-full ">
+                <UStepper ref="stepper" :items="items" class="grow">
                     <template #provider>
                         <div class="grid grid-cols-[10rem_1fr] border-1 rounded-lg">
-                            <div class="flex flex-col p-2 gap-1">
-                                <UButton label="CurseForge" icon="i-lucide-anvil" :ui="{ label: 'text-center w-full' }" @click="(e) => {selectedProvider = 'CF'}"/>
-                                <UButton label="Modrinth" icon="i-lucide-anvil" :ui="{ label: 'text-center w-full' }" @click="(e) => {selectedProvider = 'MR'}"/>
-                                <UButton label="Custom" icon="i-lucide-anvil" :ui="{ label: 'text-center w-full' }" @click="(e) => {selectedProvider = 'CU'}"/>                           
+                            <div class="flex flex-col p-2 gap-1 m-2">
+                                <UButton label="CurseForge" icon="i-lucide-anvil" :ui="{ label: 'text-center w-full' }"
+                                    @click="selectedProvider = 'CF'" />
+                                <UButton label="Modrinth" icon="i-lucide-anvil" :ui="{ label: 'text-center w-full' }"
+                                    @click="selectedProvider = 'MR'" />
+                                <UButton label="Custom" icon="i-lucide-anvil" :ui="{ label: 'text-center w-full' }"
+                                    @click="selectedProvider = 'CU'" />
                             </div>
+
                             <div class="flex">
                                 <!-- TODO: how to create this list based on the modpack list of each site? -->
-                                <div v-show="selectedProvider === 'CF'">
+                                <div v-if="selectedProvider === 'CF'">
                                     <ul>
                                         <li>
                                             <p>wa</p>
                                         </li>
                                     </ul>
                                 </div>
-                                <div v-show="selectedProvider === 'MR'">
+                                <div v-else-if="selectedProvider === 'MR'">
                                     <ul>
                                         <li>
                                             <p>wu</p>
                                         </li>
                                     </ul>
                                 </div>
-                                <div v-show="selectedProvider === 'CU'">
-                                    <ul>
-                                        <li>
-                                            <!-- TODO: add drag and drop -->
-                                            <p>wu</p>
-                                        </li>
-                                    </ul>
+                                <div v-else>
+                                    <div ref="dropZoneRef" class="">
+                                        Drop files here
+                                    </div>
                                 </div>
                             </div>
 
                         </div>
+                    </template>
+                    <template #config>
+                        <UForm :schema="serverWizardSchema" :state="wizardModel" class="space-y-4">
+                            <div class="grid">
+                                <USeparator label="Server Options" />
+                                <div class="grid grid-cols-3 justify-center gap-2 m-2">
+                                    <UFormField label="Type" name="type">
+                                        <USelectMenu v-model="wizardModel.type" :items="[...SERVERTYPES]"
+                                            :search-input="false" class="w-full" />
+                                    </UFormField>
+                                    <UFormField label="Version" name="version">
+                                        <UInput v-model="wizardModel.version" placeholder="Version" />
+                                    </UFormField>
+                                    <UFormField label="Max Players" name="maxPlayers">
+                                        <UInput v-model="wizardModel.maxPlayers" type="number" placeholder="20" />
+                                    </UFormField>
+                                    <UFormField label="Whitelist" class="col-start-2" name="whitelist">
+                                        <UTextarea v-model="wizardModel.whitelist"
+                                            placeholder="Type username or UUID" />
+                                    </UFormField>
+                                </div>
+
+                                <USeparator label="Container Options" />
+                                <div class="grid grid-cols-2 gap-2 m-2">
+
+                                    <UFormField label="Memory" name="memory">
+                                        <UInput v-model="wizardModel.memory" type="number" placeholder="6" />
+                                    </UFormField>
+                                    <UFormField label="Use Aikar Flag" class="justify-center" name="useAikarFlag">
+                                        <UCheckbox v-model="wizardModel.useAikarFlag" />
+                                    </UFormField>
+                                </div>
+                                <USeparator label="Container Options" />
+                                <div class="flex gap-2 m-2 justify-center">
+                                    <UButton color="primary" label="Advance Settings" icon="i-lucide-book-open-text"
+                                        :ui="{ label: 'text-center w-full' }" disabled />
+                                </div>
+                            </div>
+                        </UForm>
+                    </template>
+                    <template #confirm>
+                        <div class="flex">
+                            <h1>Table that display the form data</h1>
+                        </div>
+                        <UButton trailing-icon="i-material-symbols-settings">
+                            View More
+                        </UButton>
                     </template>
                 </UStepper>
 
@@ -66,8 +146,14 @@ const selectedProvider = ref<string>("CF")
                         Prev
                     </UButton>
 
-                    <UButton trailing-icon="i-lucide-arrow-right" :disabled="!stepper?.hasNext" @click="stepper?.next()">
+
+                    <UButton v-if="stepper?.hasNext" trailing-icon="i-lucide-arrow-right" :disabled="!stepper?.hasNext"
+                        @click="stepper?.next()">
                         Next
+                    </UButton>
+                    <UButton v-else-if="stepper?.hasNext === false" trailing-icon="i-lucide-plane-takeoff"
+                        @click="createServer">
+                        Create
                     </UButton>
                 </div>
             </div>

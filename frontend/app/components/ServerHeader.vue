@@ -4,21 +4,21 @@
             label: 'Home',
             icon: 'i-lucide-house'
         },
-        {
-            label: 'Components',
-            icon: 'i-lucide-box',
-            to: '/components'
-        },
-        {
-            label: 'Breadcrumb',
-            icon: 'i-lucide-link',
-            to: '/components/breadcrumb'
-        }
+        // {
+        //     label: 'Components',
+        //     icon: 'i-lucide-box',
+        //     to: '/components'
+        // },
+        // {
+        //     label: 'Breadcrumb',
+        //     icon: 'i-lucide-link',
+        //     to: '/components/breadcrumb'
+        // }
     ])
 </script>
 
 <template>
-    <div class="flex p-2 border-2">
+    <div class="flex p-2">
         <UButton color="neutral" icon="i-lucide-align-justify" size="sm" />
         <USeparator orientation="vertical" class="p-2" />
         <UBreadcrumb :items="items" class="p-2" />
