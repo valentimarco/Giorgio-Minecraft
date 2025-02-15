@@ -3,18 +3,17 @@ const items = [
     {
         slot: 'provider',
         title: 'Select Provider',
-        icon: 'i-lucide-database-zap'
+        icon: 'i-lucide-database'
     }, {
         slot: 'config',
         title: 'Configure your Server',
-        icon: 'i-lucide-cog'
+        icon: 'i-lucide-settings'
     }, {
         slot: 'confirm',
         title: 'Confirm your settings',
-        icon: 'i-lucide-view'
+        icon: 'i-lucide-check'
     }
 ]
-
 
 const wizardModel = reactive<Partial<ServerWizard>>({
     type: 'VANILLA',
@@ -24,23 +23,18 @@ const wizardModel = reactive<Partial<ServerWizard>>({
     memory: 6
 })
 
-
-const stepper = useTemplateRef('stepper')
 const selectedProvider = ref<string>("CF")
-const dropZoneRef = ref<HTMLDivElement>()
+const stepper = useTemplateRef('stepper')
+const dropZone = useTemplateRef('dropZone')
 
 const onDrop = (files: File[] | null) => {
-    // called when files are dropped on zone
     console.log(files)
 }
 
-const { isOverDropZone } = useDropZone(dropZoneRef, {
+useDropZone(dropZone, {
     onDrop,
-    // specify the types of data to be received.
     dataTypes: ['image/png'],
-    // control multi-file drop
     multiple: true,
-    // whether to prevent default behavior for unhandled events
     preventDefaultForUnhandled: false,
 })
 
@@ -84,7 +78,7 @@ const createServer = () => {
                                     </ul>
                                 </div>
                                 <div v-else>
-                                    <div ref="dropZoneRef" class="">
+                                    <div ref="dropZone" class="">
                                         Drop files here
                                     </div>
                                 </div>

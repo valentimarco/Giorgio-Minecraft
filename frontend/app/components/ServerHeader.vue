@@ -1,20 +1,10 @@
 <script lang="ts" setup>
-    const items = ref([
-        {
-            label: 'Home',
-            icon: 'i-lucide-house'
-        },
-        // {
-        //     label: 'Components',
-        //     icon: 'i-lucide-box',
-        //     to: '/components'
-        // },
-        // {
-        //     label: 'Breadcrumb',
-        //     icon: 'i-lucide-link',
-        //     to: '/components/breadcrumb'
-        // }
-    ])
+const items = ref([
+    {
+        label: 'Home',
+        icon: 'i-lucide-house'
+    },
+])
 </script>
 
 <template>
