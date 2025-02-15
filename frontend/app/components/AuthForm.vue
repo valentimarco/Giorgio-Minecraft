@@ -24,7 +24,7 @@ const submitButtonText = computed(() => type === 'login' ? 'Log In' : 'Register'
       <UInput v-model="credentials.password" type="password" />
     </UFormField>
 
-    <UFormField v-if="type === 'register'" label="Confirm Password" name="confirmPassword">
+    <UFormField v-if="type === 'register'" label="Confirm Password" name="confirmPassword" size="xl">
       <UInput v-model="(credentials as UserRegister).confirmPassword" type="password" />
     </UFormField>
 

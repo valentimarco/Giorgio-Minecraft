@@ -35,7 +35,7 @@ const itemsNavMenu = computed<NavigationMenuItem[]>(() => [
 
 <template>
     <div class="flex flex-col bg-base-100 rounded-lg m-2 p-2 gap-2 border-2 text-2xl">
-        <ServerWizard />
+        <ServerModalWizard />
         <USeparator size="xl" />
         <USelectMenu v-model="curServer" value-key="value" :items="itemsSelectMenu" class="w-full" size="xl" />
         <USeparator />

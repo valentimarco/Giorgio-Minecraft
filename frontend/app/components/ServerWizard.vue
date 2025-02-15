@@ -45,10 +45,7 @@ const createServer = () => {
 </script>
 
 <template>
-    <UModal title="Modal with close button" :close="{ color: 'primary', variant: 'outline', class: 'rounded-full' }">
-        <UButton color="primary" label="Create Server" icon="i-lucide-plus" :ui="{ label: 'text-center w-full' }" />
-        <template #body>
-            <div class="flex flex-col h-full w-full ">
+    <div class="flex flex-col h-full w-full ">
                 <UStepper ref="stepper" :items="items" class="grow">
                     <template #provider>
                         <div class="grid grid-cols-[10rem_1fr] border-1 rounded-lg">
@@ -151,6 +148,4 @@ const createServer = () => {
                     </UButton>
                 </div>
             </div>
-        </template>
-    </UModal>
 </template>
