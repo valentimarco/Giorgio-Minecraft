@@ -2,11 +2,16 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
+  experimental: {
+    typedPages: true,
+  },
+
   modules: [
     '@nuxt/ui',
     '@nuxt/eslint',
     '@pinia/nuxt',
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
+    'nuxt-auth-utils'
   ],
 
   css: ['~/assets/css/main.css'],
