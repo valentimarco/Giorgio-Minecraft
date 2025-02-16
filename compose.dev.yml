@@ -1,0 +1,19 @@
+services:
+  backend:
+    image: cosmtrek/air
+    working_dir: /backend
+    ports:
+      - 42069:42069
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: ./docker/postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: admin_minecraft

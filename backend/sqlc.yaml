@@ -1,0 +1,15 @@
+version: "2"
+sql:
+- engine: "postgresql"
+  queries: "database/queries.sql"
+  schema: "database/migrations"
+  gen:
+    go:
+      sql_package: "pgx/v5"
+      package: "database"
+      out: "database/gen"
+      overrides:
+      - db_type: "ulid"
+        go_type:
+          import: "github.com/oklog/ulid/v2"
+          type: "ULID"
