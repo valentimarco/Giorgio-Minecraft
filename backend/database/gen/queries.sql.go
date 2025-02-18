@@ -32,6 +32,41 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 	return i, err
 }
 
+const existUser = `-- name: ExistUser :one
+SELECT EXISTS(select id, username, password from users)
+`
+
+func (q *Queries) ExistUser(ctx context.Context) (bool, error) {
+	row := q.db.QueryRow(ctx, existUser)
+	var exists bool
+	err := row.Scan(&exists)
+	return exists, err
+}
+
+const getAllUsers = `-- name: GetAllUsers :many
+SELECT id, username, password FROM users
+`
+
+func (q *Queries) GetAllUsers(ctx context.Context) ([]User, error) {
+	rows, err := q.db.Query(ctx, getAllUsers)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []User
+	for rows.Next() {
+		var i User
+		if err := rows.Scan(&i.ID, &i.Username, &i.Password); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getUserByID = `-- name: GetUserByID :one
 SELECT id, username, password FROM users
 WHERE id = $1

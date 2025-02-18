@@ -9,3 +9,9 @@ INSERT INTO users (
   $1, $2
 )
 RETURNING *;
+
+-- name: GetAllUsers :many
+SELECT * FROM users;
+
+-- name: ExistUser :one
+SELECT EXISTS(select * from users);

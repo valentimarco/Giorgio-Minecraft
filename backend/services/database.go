@@ -9,14 +9,15 @@ import (
 )
 
 var (
-	db *database.Queries
+	ClientDB *database.Queries
 )
-//TODO: switch to connection pool to be safe under goroutinces
+
+// TODO: switch to connection pool to be safe under goroutinces
 func CreateConnection(ctx context.Context) *pgx.Conn {
 	conn, err := pgx.Connect(ctx, os.Getenv("DB_URL"))
 	if err != nil {
 		panic("Database not found xdd")
 	}
-	db = database.New(conn)
+	ClientDB = database.New(conn)
 	return conn
 }
