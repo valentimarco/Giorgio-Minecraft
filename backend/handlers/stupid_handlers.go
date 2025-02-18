@@ -9,13 +9,13 @@ import (
 
 func FirstTimeHandler(c *fiber.Ctx) error {
 
-	users, err := services.ClientDB.GetAllUsers(context.Background())
+	exists, err := services.ClientDB.ExistUser(context.Background())
 	if err != nil {
 		c.SendStatus(500)
 		return err
 	}
 
 	return c.JSON(fiber.Map{
-		"firstTime": len(users) == 1,
+		"firstTime": exists,
 	})
 }
