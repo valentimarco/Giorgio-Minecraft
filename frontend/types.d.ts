@@ -4,4 +4,19 @@ declare module '@nuxt/ui' {
     }
 }
 
+declare module '#auth-utils' {
+  // interface User {
+    
+  // }
+
+  interface UserSession {
+    readonly token: string
+    readonly loggedInAt: number
+  }
+
+  // interface SecureSessionData {
+  //   // Add your own fields
+  // }
+}
+
 export {}

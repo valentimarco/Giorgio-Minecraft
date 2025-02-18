@@ -1,10 +1,23 @@
 <script lang="ts" setup>
-
-//const { loggedIn, session, user, clear, fetch } = useUserSession()
-const firstTimeUser = true //TODO: get this from backend
+const { backendUrl } = useRuntimeConfig().public
+// const { user, fetch } = useUserSession()
+const { data: firstTimeUser } = await useLazyFetch(`${backendUrl}/api/v1/first-time`, {
+  transform: (d: { firstTime: boolean }) => d.firstTime,
+  default: () => false
+})
 
 
 const stepper = ref(false);
+
+const registerUser = async (e: UserRegister) => {
+  await $fetch('/api/register', {
+    method: 'post',
+    body: {
+      username: e.username,
+      password: e.password
+    },
+  })
+}
 
 
 
@@ -16,8 +29,8 @@ const stepper = ref(false);
       <h1 class="text-center">Welcome to Giorgio Minecraft Administration</h1>
     </div>
     <div v-if="firstTimeUser" class="w-full h-full">
-          <AuthForm v-if="!stepper" type="register" class="flex flex-col items-center space-y-4" @submit="(e) => {console.log(e);  stepper = !stepper}" />
-          <ServerWizard v-else />
+      <AuthForm v-if="!stepper" type="register" class="flex flex-col items-center space-y-4" @submit="registerUser" />
+      <ServerWizard v-else />
     </div>
     <div v-else>
       <AuthForm type="login" class="flex flex-col items-center space-y-4" @submit="(e) => console.log(e)" />
