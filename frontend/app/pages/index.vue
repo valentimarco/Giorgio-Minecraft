@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 const { backendUrl } = useRuntimeConfig().public
-// const { user, fetch } = useUserSession()
-const { data: firstTimeUser } = await useLazyFetch(`${backendUrl}/api/v1/first-time`, {
+const { data: firstTimeUser } = await useFetch(`${backendUrl}/api/v1/first-time`, {
   transform: (d: { firstTime: boolean }) => d.firstTime,
   default: () => false
 })
+const {fetch } = useUserSession()
 
 
 const stepper = ref(false);
@@ -14,11 +14,13 @@ const registerUser = async (e: UserRegister) => {
     method: 'post',
     body: {
       username: e.username,
-      password: e.password
+      password: e.password,
+      confirmPassword: e.confirmPassword
     },
-  })
-}
+  }).then(() => fetch())
 
+  stepper.value = !stepper.value
+}
 
 
 </script>

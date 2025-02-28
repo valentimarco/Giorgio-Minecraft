@@ -16,6 +16,6 @@ func FirstTimeHandler(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(fiber.Map{
-		"firstTime": exists,
+		"firstTime": !exists,
 	})
 }
