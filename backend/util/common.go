@@ -1,7 +1,7 @@
-package utils
+package util
 
 import (
-	"backend/models"
+	"backend/model"
 	"errors"
 	"os"
 
@@ -22,7 +22,7 @@ func CreateHash(password string) (hash string, err error) {
 }
 
 func GenerateToken(id ulid.ULID) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS512, models.AuthClaims{
+	token := jwt.NewWithClaims(jwt.SigningMethodHS512, model.AuthClaims{
 		UserID: id,
 	})
 

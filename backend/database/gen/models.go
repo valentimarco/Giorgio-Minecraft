@@ -2,7 +2,7 @@
 // versions:
 //   sqlc v1.28.0
 
-package database
+package gen
 
 import (
 	ulid "github.com/oklog/ulid/v2"

@@ -13,8 +13,13 @@ services:
   db:
     build:
       context: ./docker/postgres
+    volumes:
+      - database:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: example
       POSTGRES_DB: admin_minecraft
+
+volumes:
+  database:

@@ -14,6 +14,9 @@ up:
 logs:
 	$(docker_cmd) logs -f
 
+generate-binds:
+	$(docker_cmd) exec backend sqlc generate
+
 create-entity:
 	$(docker_cmd) exec backend migrate create -ext sql -dir database/migrations -seq ${NAME}
 	

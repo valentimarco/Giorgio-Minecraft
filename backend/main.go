@@ -1,8 +1,9 @@
 package main
 
 import (
-	"backend/handlers"
-	"backend/services"
+	"backend/database"
+	"backend/model"
+	"backend/controller"
 	"context"
 	"log"
 
@@ -18,16 +19,18 @@ func main() {
 	}
 	ctx := context.Background()
 
-	conn := services.CreateConnection(ctx)
-	defer conn.Close(ctx)
+	db := database.CreateConnection(ctx)
+	defer db.Close(ctx)
+
+	appctx := model.AppContext{
+		DB: db,
+	}
 
 	app := fiber.New()
 	app.Use(logger.New())
 
 	index := app.Group("/api/v1")
-	index.Post("register", handlers.RegisterHandler)
-	index.Get("first-time", handlers.FirstTimeHandler)
-	// controllers.authRouter()
+	controller.AuthRouter(index, appctx)
 
 	log.Fatal(app.Listen(":42069"))
 }
