@@ -2,13 +2,14 @@ package controller
 
 import (
 	"backend/controller/handler"
-	"backend/model"
+	"backend/database"
+	"backend/model/user"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-
-func AuthRouter(app fiber.Router, appctx model.AppContext){
-	app.Post("register", handler.RegisterHandler(appctx))
-	app.Get("first-time", handler.FirstTimeHandler(appctx))
+func AuthRouter(app fiber.Router, db *database.DB) {
+	userService := user.NewService(db)
+	app.Post("register", handler.RegisterHandler(userService))
+	app.Get("first-time", handler.FirstTimeHandler(userService))
 }

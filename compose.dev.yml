@@ -2,13 +2,15 @@ services:
   backend:
     build:
       context: ./docker/backend
+    depends_on:
+      - db
     working_dir: /backend
     ports:
       - 42069:42069
     volumes:
       - ./backend:/backend
-    depends_on:
-      - db
+      - /var/run/docker.sock:/var/run/docker.sock
+    
 
   db:
     build:

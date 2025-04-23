@@ -1,23 +1,22 @@
 package handler
 
 import (
-	"backend/model"
-	"context"
+	"backend/model/user"
 
 	"github.com/gofiber/fiber/v2"
 )
-func FirstTimeHandler(appctx model.AppContext) fiber.Handler{
-	return func (c *fiber.Ctx) error {
 
-		exists, err := appctx.DB.ExistUser(context.Background())
+func FirstTimeHandler(userService user.Service) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+
+		exists, err := userService.ExistUser()
 		if err != nil {
 			c.SendStatus(500)
 			return err
 		}
-	
+
 		return c.JSON(fiber.Map{
 			"firstTime": !exists,
 		})
 	}
 }
-

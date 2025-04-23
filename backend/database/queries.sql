@@ -15,3 +15,16 @@ SELECT * FROM users;
 
 -- name: ExistUser :one
 SELECT EXISTS(select * from users);
+
+
+-- name: CreateServer :one
+INSERT INTO servers(
+  type,name,memory,max_player,aika_flag
+) VALUES (
+  $1, $2, $3, $4, $5
+)
+RETURNING *;
+
+-- name: GetServerByID :one
+SELECT * FROM servers
+WHERE id = $1;

@@ -1,18 +1,17 @@
 package handler
 
 import (
-	g "backend/database/gen"
-	"backend/model"
-
-	"backend/model/dto"
+	"backend/model/user"
 	"backend/util"
 
 	"github.com/gofiber/fiber/v2"
 )
-func RegisterHandler(appctx model.AppContext) fiber.Handler{
+
+// TODO: write a user service to compact all business logic
+func RegisterHandler(userService user.Service) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
-		exists, err := appctx.DB.ExistUser(c.UserContext())
+		exists, err := userService.ExistUser()
 		if err != nil {
 			c.SendStatus(500)
 			return c.JSON(fiber.Map{})
@@ -28,7 +27,7 @@ func RegisterHandler(appctx model.AppContext) fiber.Handler{
 			}, "problem+json")
 		}
 
-		userdto := new(dto.UserDTO)
+		userdto := new(user.UserDTO)
 		if err := c.BodyParser(userdto); err != nil {
 			c.SendStatus(fiber.StatusBadRequest)
 			return c.JSON(fiber.Map{
@@ -38,6 +37,11 @@ func RegisterHandler(appctx model.AppContext) fiber.Handler{
 					"",
 				},
 			})
+		}
+
+		if userdto.Username == "" || userdto.Password == ""{
+			c.SendStatus(fiber.StatusUnprocessableEntity)
+			return c.JSON(fiber.Map{})
 		}
 
 		passwordHash, err := util.CreateHash(userdto.Password)
@@ -51,10 +55,7 @@ func RegisterHandler(appctx model.AppContext) fiber.Handler{
 			})
 		}
 
-		user, err := appctx.DB.CreateUser(c.UserContext(), g.CreateUserParams{
-			Username: userdto.Username,
-			Password: passwordHash,
-		})
+		user, err := userService.CreateUser(userdto.Username, passwordHash)
 		if err != nil {
 			c.SendStatus(fiber.StatusConflict)
 			return c.JSON(fiber.Map{})

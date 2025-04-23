@@ -10,10 +10,12 @@ NAME ?= create_name_table
 
 up:
 	$(docker_cmd) up -d
-
 logs:
 	$(docker_cmd) logs -f
-
+down:
+	$(docker_cmd) down
+build:
+	$(docker_cmd) build
 generate-binds:
 	$(docker_cmd) exec backend sqlc generate
 

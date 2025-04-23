@@ -1,9 +1,10 @@
 package main
 
 import (
-	"backend/database"
-	"backend/model"
 	"backend/controller"
+	"backend/database"
+	_ "backend/docs"
+	"backend/services"
 	"context"
 	"log"
 
@@ -12,6 +13,14 @@ import (
 	"github.com/joho/godotenv"
 )
 
+
+// @title GiorgioMinecraftBackend
+// @version 0.0.1
+// @description HELL
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:42069
+// @BasePath /api/v1
 func main() {
 	err := godotenv.Load()
 	if err != nil {
@@ -22,15 +31,22 @@ func main() {
 	db := database.CreateConnection(ctx)
 	defer db.Close(ctx)
 
-	appctx := model.AppContext{
-		DB: db,
-	}
+	sm := services.NewServerManager(db)
+	defer sm.Close(ctx)
+
+	
 
 	app := fiber.New()
 	app.Use(logger.New())
 
 	index := app.Group("/api/v1")
-	controller.AuthRouter(index, appctx)
+	// index.Get("/docs/*", scalar.HandlerDefault)
+
+	controller.AuthRouter(index, db)
+	controller.ServerRouter(index, sm)
 
 	log.Fatal(app.Listen(":42069"))
+
+
+	// cm.PullImage(context.TODO())
 }

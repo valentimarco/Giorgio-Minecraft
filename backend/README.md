@@ -2,4 +2,6 @@
 
 ## TODO
 
-1. Endpoint to verify the user and check first time
+- [x] Endpoint to verify the user and check first time
+- [ ] Endpoint to create, delete, modify servers
+- [ ] wa
