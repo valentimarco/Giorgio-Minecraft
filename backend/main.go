@@ -3,7 +3,6 @@ package main
 import (
 	"backend/controller"
 	"backend/database"
-	_ "backend/docs"
 	"backend/services"
 	"context"
 	"log"
